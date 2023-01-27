@@ -8,39 +8,23 @@ import uuid from 'react-uuid';
 
 
 function App() {
-  const [post, setPost] = useState(
-    [
-      {
-        id: uuid(),
-        title: 'What is  this',
-        likes: 3,
-        dislikes: 0,
-      },
-      {
-        id: uuid(),
-        title: 'How to do it',
-        likes: 7,
-        dislikes: 8,
-      },
-      {
-        id: uuid(),
-        title: 'Hwere to find',
-        likes: 1,
-        dislikes: 1,
-      },
-    ]
-  );
+  const [post, setPost] = useState([]);
 
-  const handleAddPostClick = () => {
+  const handleAddPost = (title, description, category, promote, status, picture) => {
     // Wrong Way!!!!!
     // const newPost = setPost('created new post!');
     // post.push(newPost)
     const updatedPosts = [...post,
     {
       id: uuid(),
-      title: 'new post',
-      likes: 5,
-      dislikes: 3
+      title,
+      description,
+      category,
+      promote,
+      status,
+      picture,
+      likes: 0,
+      dislikes: 0
     }]
 
     setPost(updatedPosts)
@@ -76,7 +60,9 @@ function App() {
         onPostLike={handlePostLike}
         onPostDislike={handlePostDislike}
       />
-      <Form />
+      <Form
+        onAddPost={handleAddPost}
+      />
       <Footer />
     </>
   );

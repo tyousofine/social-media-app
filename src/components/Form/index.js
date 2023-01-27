@@ -1,7 +1,7 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
-export default function Form() {
+export default function Form({ onAddPost }) {
     const [title, setTitle] = useState('');;
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
@@ -9,13 +9,19 @@ export default function Form() {
     const [status, setStatus] = useState('');
     const [picture, setPicture] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    const inputFile = useRef();
 
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
 
-        const validate = [];
+        // Hide success message
+        setShowSuccess(false);
 
+        // validate the data
+        const validate = [];
         if (title.length < 5) {
             validate.push("Title too short")
         }
@@ -32,19 +38,23 @@ export default function Form() {
             validate.push("Please provide a picture")
         }
 
-        if (validate.length > 0) {
-            // Invalid data
-            console.log("Validate: ", validate)
-            setErrorMessages(validate);
-            console.log(errorMessages);
-        } else {
+        setErrorMessages(validate);
+        if (validate.length === 0) {
+
             // Valid data
-            console.log("Title: ", title)
-            console.log("Desc: ", description)
-            console.log("Category: ", category)
-            console.log("form submited!")
-            console.log("status: ", status)
-            setErrorMessages([])
+            onAddPost(title, description, category, promote, status, picture)
+
+            // display submission sucess message
+            setShowSuccess(true)
+
+            // clear the form
+            setTitle('');
+            setDescription('');
+            setCategory('');
+            setPromote(true);
+            setStatus('');
+            setPicture('');
+            inputFile.current.value = "";
         }
     }
 
@@ -75,6 +85,18 @@ export default function Form() {
     return (
         <form onSubmit={handleFormSubmit}>
             <hr />
+
+            {
+                showSuccess && (
+                    <div>
+                        <p>
+                            <strong>Form Succesfully submitted!</strong>
+                        </p>
+                        <hr />
+                    </div>
+                )}
+
+
             {/* Conditionally display the error messages */}
             {errorMessages.length > 0 && (
                 <div>
@@ -143,31 +165,6 @@ export default function Form() {
                 </label>
             </div>
 
-            {/* <div>
-                Status:
-                <label>
-                    Draft
-                    <input type="radio"
-                        value='draft'
-                        checked={status === 'draft'}
-                        onChange={handleRadioChange} />
-                </label>
-                <label>
-                    Publish
-                    <input type="radio"
-                        value='published'
-                        checked={status === 'published'}
-                        onChange={handleRadioChange} />
-                </label>
-                <label>
-                    Archive
-                    <input type="radio"
-                        value='archive'
-                        checked={status === 'archive'}
-                        onChange={handleRadioChange} />
-                </label>
-            </div> */}
-
             {/*  Status Field (Draft, Publish, Archive) */}
             <div>
                 Status:
@@ -191,6 +188,7 @@ export default function Form() {
                         type="file"
                         accept='image/*'
                         onChange={handlePictureSelection}
+                        ref={inputFile}
                     />
                     {picture !== '' && <img
                         src={picture}

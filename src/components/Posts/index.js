@@ -21,13 +21,9 @@ export default function Posts({ post, onPostLike, onPostDislike }) {
             {post.map((post, index) => (
                 <PostDetail
                     key={index}
-                    id={post.id}
-                    title={post.title}
-                    likes={post.likes}
-                    dislikes={post.dislikes}
+                    {...post}
                     onPostLike={onPostLike}
                     onPostDislike={onPostDislike}
-
                 />
             ))}
 
