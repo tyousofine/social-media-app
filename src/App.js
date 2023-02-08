@@ -8,7 +8,20 @@ import uuid from 'react-uuid';
 
 
 function App() {
-  const [post, setPost] = useState([]);
+  const initialPosts = [
+    {
+      id: uuid(),
+      title: 'My Post Title',
+      description: 'This is a description to my post.',
+      category: 'ent',
+      promote: true,
+      status: 'p',
+      picture: null,
+      likes: 0,
+      dislikes: 0
+    }
+  ]
+  const [post, setPost] = useState(initialPosts);
 
   const handleAddPost = (title, description, category, promote, status, picture) => {
     // Wrong Way!!!!!
