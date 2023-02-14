@@ -1,6 +1,7 @@
 import PostDetail from "../PostDetail"
 
 
+
 export default function Posts({ post, onPostLike, onPostDislike }) {
 
 

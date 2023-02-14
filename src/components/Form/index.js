@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useRef } from 'react'
+import { categories } from '../../includes/variables';
 
 export default function Form({ onAddPost }) {
     const [title, setTitle] = useState('');;
@@ -57,16 +58,6 @@ export default function Form({ onAddPost }) {
             inputFile.current.value = "";
         }
     }
-
-    const categories = [
-        { id: 'edu', text: 'Education' },
-        { id: 'ent', text: 'Entertainment' },
-        { id: 'gam', text: 'Gaming' },
-        { id: 'nws', text: 'News' },
-        { id: 'oth', text: 'Other' },
-
-    ]
-
     const statuses = [
         { id: 'd', text: 'Draft' },
         { id: 'p', text: 'Published' },
@@ -133,7 +124,7 @@ export default function Form({ onAddPost }) {
                 <label>
                     Description:
                     <textarea
-                        value={description}
+                        value={picture}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="My post"
                         maxLength={500}
