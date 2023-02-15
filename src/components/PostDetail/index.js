@@ -1,4 +1,5 @@
 import { getCategoryText, getStatusText } from "../../includes/variables";
+import './styles.scss'
 
 export default function PostDetail({ title, likes, dislikes, onPostLike, id, onPostDislike, description, category, promote, status, picture }) {
 
@@ -10,18 +11,26 @@ export default function PostDetail({ title, likes, dislikes, onPostLike, id, onP
         onPostDislike(id)
     }
 
+    const promoteStyle = promote ? 'promote-yes' : 'promote-no'
+
+    const highlightDislikes = dislikes >= 10 ? 'too-many-dislikes' : ''
 
     return (
-        <div>
+        <div className="post-item">
             <h3>{title}</h3>
             <img src={picture} alt={title} width={100} />
-            <div>{description}</div>
-            <div>Category: {getCategoryText(category)}</div>
-            <div>Status: {getStatusText(status)}</div>
-            <div>Promote: {promote ? "Yes" : "No"}</div>
+            <div className="post-text">{description}</div>
+            <div >Category: {getCategoryText(category)}</div>
+            <div className="post-text">Status: {getStatusText(status)}</div>
+            <div className={promoteStyle}>Promote: <strong>{promote ? "Yes" : "No"}</strong></div>
+
             <div>Likes: {likes} Likes </div>
             <button onClick={handleLikeClick}>Like</button>
-            <div>Dislikes: {dislikes} Dislikes</div>
+
+            <div className={highlightDislikes}
+                style={{ fontSize: 10 + dislikes }}
+
+            >Dislikes: {dislikes} Dislikes</div>
             <button onClick={handleDislikeClick}>Dislike</button>
         </div>
 

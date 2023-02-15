@@ -1,6 +1,9 @@
 import React from 'react'
 import { useState, useRef } from 'react'
 import { categories } from '../../includes/variables';
+import { statuses } from '../../includes/variables';
+import './styles.scss'
+
 
 export default function Form({ onAddPost }) {
     const [title, setTitle] = useState('');;
@@ -58,11 +61,7 @@ export default function Form({ onAddPost }) {
             inputFile.current.value = "";
         }
     }
-    const statuses = [
-        { id: 'd', text: 'Draft' },
-        { id: 'p', text: 'Published' },
-        { id: 'a', text: 'Archived' },
-    ]
+
 
     const handlePictureSelection = (event) => {
         const file = event.target.files[0];
@@ -74,7 +73,9 @@ export default function Form({ onAddPost }) {
     }
 
     return (
-        <form onSubmit={handleFormSubmit}>
+        <form
+            className='form-component'
+            onSubmit={handleFormSubmit}>
             <hr />
 
             {
