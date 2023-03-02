@@ -1,0 +1,8 @@
+@import "./../../styles/variables.scss";
+
+footer.main {
+  background-color: $primary-color;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
