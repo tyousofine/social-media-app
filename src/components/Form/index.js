@@ -62,7 +62,6 @@ export default function Form({ onAddPost }) {
         }
     }
 
-
     const handlePictureSelection = (event) => {
         const file = event.target.files[0];
         const fileReader = new FileReader();
@@ -76,22 +75,18 @@ export default function Form({ onAddPost }) {
         <form
             className='form-component'
             onSubmit={handleFormSubmit}>
-            <hr />
 
             {
                 showSuccess && (
-                    <div>
-                        <p>
-                            <strong>Form Succesfully submitted!</strong>
-                        </p>
-                        <hr />
+                    <div className='success-message'>
+                        Form succesfully submitted!
                     </div>
                 )}
 
 
             {/* Conditionally display the error messages */}
             {errorMessages.length > 0 && (
-                <div>
+                <div className='form-validate'>
                     Invalid data:
                     <ul>{errorMessages.map((e, index) => (
                         <li key={index}>{e}</li>
@@ -125,7 +120,7 @@ export default function Form({ onAddPost }) {
                 <label>
                     Description:
                     <textarea
-                        value={picture}
+                        value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="My post"
                         maxLength={500}
@@ -148,17 +143,17 @@ export default function Form({ onAddPost }) {
             </div>
 
             {/* Promot Field */}
-            <div>
+            <div className='promote-field'>
                 <label>
-                    Promote:
                     <input type="checkbox"
                         checked={promote}
                         onChange={(e) => setPromote(e.target.checked)} />
+                    Promote
                 </label>
             </div>
 
             {/*  Status Field (Draft, Publish, Archive) */}
-            <div>
+            <div className='status-field'>
                 Status:
                 {statuses.map((item) => (
                     <label key={item.id}>
@@ -182,12 +177,12 @@ export default function Form({ onAddPost }) {
                         onChange={handlePictureSelection}
                         ref={inputFile}
                     />
-                    {picture !== '' && <img
-                        src={picture}
-                        alt="Preview"
-                        width={100} />
-                    }
                 </label>
+                {picture !== '' && <img
+                    src={picture}
+                    alt="Preview"
+                    width={100} />
+                }
             </fieldset>
             <button>Send</button>
         </form>

@@ -1,6 +1,8 @@
+import './styles.scss'
+
 function Footer() {
     return (
-        <footer>
+        <footer className='main'>
             Copyright &copy; Tina.
         </footer>
     )
