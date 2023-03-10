@@ -103,4 +103,14 @@
       }
     }
   }
+
+  .rate-single-button {
+    button {
+      &.dislike,
+      &.like {
+        border-radius: 20px;
+        border: none;
+      }
+    }
+  }
 }
