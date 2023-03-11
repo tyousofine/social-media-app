@@ -1,16 +1,15 @@
 import './styles.scss';
 
-
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 export default function MainMenu() {
     return (
         <nav className="main">
-            <a href="/">Home</a>
-            <a href="/posts">Posts</a>
-            <a href="/preferences">Preferences</a>
-            <a href="/about">About Us</a>
-
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/posts">Posts</NavLink>
+            <NavLink to="/preferences">Preferences</NavLink>
+            <NavLink to="/about">About Us</NavLink>
         </nav>
 
     )
