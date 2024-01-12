@@ -2,24 +2,60 @@ import { getCategoryText, getStatusText } from "../../includes/variables";
 import './styles.scss'
 import { BiLike, BiDislike } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost, dislikePost } from "../../redux/postSlice";
+import { likePost, dislikePost, removePost } from "../../redux/postSlice";
 import { Link } from 'react-router-dom';
+import * as database from '../../database'
+
 
 export default function PostDetail({ title, likes, dislikes, id, description, category, promote, status, picture }) {
-    const { allowLikes, allowDislikes } = useSelector((state) => state.settings);
-
-
+    const { allowLikes, allowDislikes, } = useSelector((state) => state.settings);
     const dispatch = useDispatch()
 
-    const handleLikeClick = (e) => {
+
+
+
+    const handleLikeClick = async (e) => {
         e.preventDefault();
-        dispatch(likePost(id))
+        dispatch(likePost(id));
+
+        const data = { likes: likes + 1 }
+        const updated = await database.update(id, data);
+
+
+        if (!updated) {
+            alert('Failed to update likes')
+            // TODO improve the message to the user
+            // TODO create a redux action to remove one like
+        }
     };
 
-    const handleDislikeClick = (e) => {
+    const handleDislikeClick = async (e) => {
         e.preventDefault();
         dispatch(dislikePost(id));
+
+        const data = { dislikes: dislikes + 1 }
+        const updated = await database.update(id, data);
+
+        if (!updated) {
+            alert('Failed to update likes')
+            // TODO improve the message to the user
+            // TODO create a redux action to remove on like
+        }
     };
+
+    const handleRemoveClick = async (e) => {
+        e.preventDefault();
+
+
+        //remove from db
+        const removed = await database.remove(id);
+        if (removed) {
+            //Remove from redux store
+            dispatch(removePost(id));
+        } else {
+            alert('failed to remove item')
+        }
+    }
 
     const promoteStyle = promote ? 'promote-yes' : 'promote-no'
 
@@ -81,7 +117,7 @@ export default function PostDetail({ title, likes, dislikes, id, description, ca
                 </div>
             )
             }
-
+            <button onClick={handleRemoveClick}>Remove</button>
         </Link >
 
     )
